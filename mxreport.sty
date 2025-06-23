@@ -2,14 +2,17 @@
 %% Created for Sofian Audry - June 2025
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mxtech}[2025/06/20 mXlab style for technical reports]
+\ProvidesPackage{mxreport}[2025/06/20 mXlab style for technical reports]
 
 %% BASIC PACKAGES
 \RequirePackage[letterpaper, margin=2.5cm]{geometry}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[french]{babel}
-\emergencystretch=3em
+\frenchbsetup{
+  FrenchFootnotes=false,
+  AutoSpaceFootnotes=false
+}
 
 \RequirePackage{setspace}
 \RequirePackage{lmodern}
@@ -20,7 +23,6 @@
 \RequirePackage{xcolor}
 \RequirePackage{sectsty}
 \RequirePackage{caption}
-\RequirePackage[hang,flushmargin]{footmisc}
 \RequirePackage{listings}
 \RequirePackage{fontspec}
 \RequirePackage{csquotes}
@@ -29,6 +31,12 @@
 \RequirePackage[hidelinks]{hyperref} % Ensure URLs are clickable but minimal
 
 \RequirePackage{titlesec}
+
+\RequirePackage[hang,multiple]{footmisc}
+
+\RequirePackage{colortbl}
+
+
 
 %% Define URL appearance: underlined in black (thin)
 \hypersetup{
@@ -51,7 +59,7 @@
 %% LINE SPACING
 \setstretch{1.5} %% default for main text
 
-\newcommand{\singlespacingblock}{\setstretch{1.5}}
+\newcommand{\singlespacingblock}{\setstretch{1.15}}
 
 \newcommand{\startsinglespacingblock}{\begingroup\setstretch{1.15}\setlength{\parskip}{0.36cm}\ignorespaces}
 \newcommand{\finishsinglespacingblock}{\par\endgroup}
@@ -127,13 +135,22 @@
 \fancyfoot[C]{\fontsize{12}{14.4}\selectfont \thepage}
 
 %% FOOTNOTES
+
+\makeatletter
+\renewcommand\@makefntext[1]{%
+  \vskip 0.2cm % espace entre les notes
+  \noindent\llap{{\fontsize{8}{9.6}\selectfont\@textsuperscript{\@thefnmark}}\hspace{0.6em}}%
+  \fontsize{10}{11.5}\selectfont\setstretch{1.15}#1%
+}
+\makeatother
+
 \renewcommand{\footnoterule}{\vspace{0.2cm}\noindent\rule{0.25\linewidth}{0.5pt}\vspace{0.2cm}}
-\setlength{\skip\footins}{0.0cm} %% vertical skip above footnotes
-\setlength{\footnotesep}{0.3cm} %% horizontal space between number and text
-\let\oldfootnote\footnote
+\setlength{\skip\footins}{0.5cm} %% vertical skip above footnotes
+%\setlength{\footnotesep}{0.3cm} %% horizontal space between number and text
+%\let\oldfootnote\footnote
 %\renewcommand{\footnote}[1]{\oldfootnote{\fontsize{10}{11.5}\selectfont\singlespacingblock #1}}
 
-\renewcommand{\footnote}[1]{\oldfootnote{\fontsize{10}{11.5}\selectfont\startsinglespacingblock #1\finishsinglespacingblock}}
+%\renewcommand{\footnote}[1]{\oldfootnote{\fontsize{10}{11.5}\selectfont\startsinglespacingblock #1\finishsinglespacingblock}}
 
 
 %% CODE BLOCKS
@@ -153,20 +170,19 @@
 \captionsetup{font=small,labelfont=bf}
 
 %% CITATION STYLE
-\usepackage[style=authoryear,backend=biber]{biblatex}
+\RequirePackage[style=authoryear,backend=biber]{biblatex}
 
 %% ABSTRACT ENVIRONMENT
 
-\newenvironment{mxabstract}[1][Résumé]{
+\renewenvironment{abstract}[1][Résumé]{
   \vspace{0.63cm}
   {\normalfont\bfseries\fontsize{14}{16.1}\selectfont #1\par}
   \vspace{0.3cm}
   \startsinglespacingblock
 }{\finishsinglespacingblock}
 
-
 %% KEYWORDS
-\newenvironment{keywords}{\noindent\textit{Mots-clés:} }{\par}
+\newenvironment{keywords}{\startsinglespacingblock\noindent\textit{Mots-clés:}}{\finishsinglespacingblock}
 
 %% REFERENCES
 %\addto\captionsfrench{\renewcommand{\refname}{\section*{\singlespacingblock\normalfont\bfseries\fontsize{16}{16}\selectfont Références}}}
@@ -210,5 +226,12 @@
 \RequirePackage{enumitem}
 \setlist[itemize]{label=\textbullet}
 
+%% TABLES
+% Special column types to allow specific width.
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 %% END
+
 
