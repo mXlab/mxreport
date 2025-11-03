@@ -4,15 +4,34 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mxreport}[2025/06/20 mXlab style for technical reports]
 
+% Default language
+\newif\ifmxfrench
+\mxfrenchfalse
+
+% Declare options
+\DeclareOption{french}{\mxfrenchtrue}
+\DeclareOption{english}{\mxfrenchfalse} % Optional: fallback to English explicitly
+
+% Unknown option handler (optional)
+\DeclareOption*{%
+  \PackageWarning{mxreport}{Unknown option `\CurrentOption'}%
+}
+
+% Process options
+\ProcessOptions\relax
+
 %% BASIC PACKAGES
 \RequirePackage[letterpaper, margin=2.5cm]{geometry}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+
+\ifmxfrench
 \RequirePackage[french]{babel}
 \frenchbsetup{
   FrenchFootnotes=false,
   AutoSpaceFootnotes=false
 }
+\fi
 
 \RequirePackage{setspace}
 \RequirePackage{lmodern}
@@ -50,6 +69,32 @@
 \renewcommand{\UrlFont}{\rmfamily\selectfont}
 %\let\oldfootnotemark\footnotemark
 %\renewcommand{\footnotemark}{\begingroup\hypersetup{hidelinks}\oldfootnotemark\endgroup}
+
+%% LANCUAGE-SPECIFIC TEXT
+
+\ifmxfrench
+\newcommand{\mxdescription}[0]{%
+    Un rapport technique du mXlab\\
+    Université du Québec à Montréal\\
+    \href{http://mxlab.uqam.ca}{http://mxlab.uqam.ca}}
+\newcommand{\mxlicense}[0]{%
+    Ce document est distribué sous une licence Creative Commons\\
+    Attribution-Partage dans les Mêmes Conditions 4.0 International\\
+    Pour voir une copie de la licence, visiter: \\ \href{https://creativecommons.org/licenses/by-sa/4.0/deed.fr}{https://creativecommons.org/licenses/by-sa/4.0/deed.fr}}
+\newcommand{\mxabstract}[0]{Résumé}
+\newcommand{\mxkeywords}[0]{Mots-clés}
+\else
+\newcommand{\mxdescription}[0]{%
+    A mXlab technical report\\
+    Université du Québec à Montréal\\
+    \href{http://mxlab.uqam.ca}{http://mxlab.uqam.ca}}
+\newcommand{\mxlicense}[0]{%
+    This document is licensed under the Creative Commons license\\
+    Attribution-ShareAlike 4.0 International\\
+    To view a copy of the license, visit: \\ \href{https://creativecommons.org/licenses/by-sa/4.0/deed.en}{https://creativecommons.org/licenses/by-sa/4.0/deed.en}}
+\newcommand{\mxabstract}[0]{Abstract}
+\newcommand{\mxkeywords}[0]{Keywords}
+\fi
 
 %% MAIN FONT
 \setmainfont{Times New Roman}
@@ -110,9 +155,7 @@
   \begin{textblock*}{\linewidth}[0,1](2.5cm,25.44cm)
     {
       \begin{spacing}{1.15}\fontsize{8}{9.6}\selectfont
-      Un rapport technique du mXlab\\
-      Université du Québec à Montréal\\
-      \href{http://mxlab.uqam.ca}{http://mxlab.uqam.ca}
+      \mxdescription
       \end{spacing}
     }
   \end{textblock*}
@@ -120,9 +163,7 @@
   \begin{textblock*}{14cm}[1,1](19.4cm,25.44cm)
     {
       \begin{spacing}{1.15}\raggedleft\fontsize{8}{9.6}\selectfont
-      Ce document est distribué sous une licence Creative Commons\\
-      Attribution-Partage dans les Mêmes Conditions 4.0 International\\
-      Pour voir une copie de la licence, visiter: \\ \href{https://creativecommons.org/licenses/by-sa/4.0/deed.fr}{https://creativecommons.org/licenses/by-sa/4.0/deed.fr}
+      \mxlicense
       \end{spacing}
     }
   \end{textblock*}
@@ -232,5 +273,3 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 %% END
-
-
