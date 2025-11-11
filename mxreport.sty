@@ -214,7 +214,7 @@
 
 %% ABSTRACT ENVIRONMENT
 
-\renewenvironment{abstract}[1][Résumé]{
+\renewenvironment{abstract}[1][\mxabstract]{
   \vspace{0.63cm}
   {\normalfont\bfseries\fontsize{14}{16.1}\selectfont #1\par}
   \vspace{0.3cm}
@@ -222,7 +222,7 @@
 }{\finishsinglespacingblock}
 
 %% KEYWORDS
-\newenvironment{keywords}{\startsinglespacingblock\noindent\textit{Mots-clés:}}{\finishsinglespacingblock}
+\newenvironment{keywords}{\startsinglespacingblock\noindent\textit{\mxkeywords :}}{\finishsinglespacingblock}
 
 %% REFERENCES
 %\addto\captionsfrench{\renewcommand{\refname}{\section*{\singlespacingblock\normalfont\bfseries\fontsize{16}{16}\selectfont Références}}}
