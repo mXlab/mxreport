@@ -53,7 +53,7 @@
 
 \RequirePackage{colortbl}
 
-\RequirePackage[hidelinks]{hyperref} % Ensure URLs are clickable but minimal
+\RequirePackage[hypertexnames=false,hidelinks]{hyperref} % Ensure URLs are clickable but minimal
 \RequirePackage{bookmark} % améliore la gestion des signets
 
 %% Define URL appearance: underlined in black (thin)
@@ -214,7 +214,7 @@
 
 %% ABSTRACT ENVIRONMENT
 
-\renewenvironment{abstract}[1][\mxabstract]{
+\renewenvironment{abstract}[1][{\mxabstract}]{
   \vspace{0.63cm}
   {\normalfont\bfseries\fontsize{14}{16.1}\selectfont #1\par}
   \vspace{0.3cm}
@@ -222,7 +222,7 @@
 }{\finishsinglespacingblock}
 
 %% KEYWORDS
-\newenvironment{keywords}{\startsinglespacingblock\noindent\textit{\mxkeywords :}}{\finishsinglespacingblock}
+\newenvironment{keywords}{\startsinglespacingblock\noindent\textit{\mxkeywords:}}{\finishsinglespacingblock}
 
 %% REFERENCES
 %\addto\captionsfrench{\renewcommand{\refname}{\section*{\singlespacingblock\normalfont\bfseries\fontsize{16}{16}\selectfont Références}}}
@@ -271,5 +271,11 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Increases vertical space between table rows.
+\renewcommand{\arraystretch}{1.4}
+
+% Decreases default horizontal space between columns.
+\setlength{\tabcolsep}{4pt}
 
 %% END
